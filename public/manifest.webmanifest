@@ -1,0 +1,16 @@
+{
+  "name": "Mingle — random video chat",
+  "short_name": "Mingle",
+  "description": "Meet someone new in seconds. Random 1-on-1 video chat.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1230",
+  "theme_color": "#1a1230",
+  "icons": [
+    { "src": "/icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any maskable" }
+  ]
+}
