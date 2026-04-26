@@ -151,7 +151,7 @@ function AdminPage() {
       <Nav />
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         <div className="flex items-center gap-3 mb-2">
-          <ShieldAlert className="w-7 h-7 text-[var(--brand-pink)]" />
+          <ShieldAlert className="w-7 h-7 text-(--brand-pink)]" />
           <h1 className="display text-4xl font-black">Moderation</h1>
         </div>
         <p className="text-muted-foreground mb-8">Review reports, ban abusers, manage active bans.</p>
