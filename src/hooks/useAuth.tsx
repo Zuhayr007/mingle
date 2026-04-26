@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import type { User } from "@supabase/supabase-js";
 import { supabase, type Profile } from "@/lib/supabase";
+import { getActiveBan, type ActiveBan } from "@/lib/bans";
+import { BanDialog } from "@/components/BanDialog";
 
 type AuthCtx = {
   user: User | null;
@@ -18,8 +20,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [ban, setBan] = useState<ActiveBan | null>(null);
+  const [banOpen, setBanOpen] = useState(false);
 
   const loadProfile = async (uid: string) => {
+    // Ban check first — if banned, force sign-out and show dialog.
+    const activeBan = await getActiveBan(uid);
+    if (activeBan) {
+      setBan(activeBan);
+      setBanOpen(true);
+      await supabase.auth.signOut();
+      setUser(null);
+      setProfile(null);
+      setIsAdmin(false);
+      return;
+    }
+
     const { data: prof } = await supabase
       .from("profiles")
       .select("*")
@@ -74,6 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <Ctx.Provider value={{ user, profile, loading, isAdmin, signOut, refreshProfile }}>
       {children}
+      <BanDialog ban={ban} open={banOpen} onClose={() => setBanOpen(false)} />
     </Ctx.Provider>
   );
 }
