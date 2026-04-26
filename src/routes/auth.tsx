@@ -29,7 +29,7 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const search = useSearch({ from: "/auth" });
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const [mode, setMode] = useState<"signin" | "signup">(search.mode ?? "signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +37,7 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
 
   if (user) {
-    setTimeout(() => navigate({ to: "/chat" }), 0);
+    setTimeout(() => navigate({ to: isAdmin ? "/admin" : "/chat" }), 0);
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,10 +61,20 @@ function AuthPage() {
           toast.success("Check your email to confirm your account.");
         }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast.success("Welcome back!");
-        navigate({ to: "/chat" });
+        // Check admin role to route appropriately
+        let goAdmin = false;
+        if (data.user) {
+          const { data: role } = await supabase
+            .from("user_roles")
+            .select("role")
+            .eq("user_id", data.user.id)
+            .maybeSingle();
+          goAdmin = role?.role === "admin";
+        }
+        navigate({ to: goAdmin ? "/admin" : "/chat" });
       }
     } catch (err: any) {
       toast.error(err.message ?? "Something went wrong");
