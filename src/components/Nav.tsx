@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -16,22 +16,22 @@ export function Nav() {
           {user ? (
             <>
               {isAdmin && (
-                <Button variant="ghost" size="sm" onClick={() => navigate("/admin")}>
+                <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/admin" })}>
                   <Shield className="w-4 h-4" /> Admin
                 </Button>
               )}
-              <Button variant="ghost" size="sm" onClick={() => navigate("/profile")}>
+              <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/profile" })}>
                 <UserIcon className="w-4 h-4" />
                 <span className="hidden sm:inline">{profile?.username ?? "Profile"}</span>
               </Button>
-              <Button variant="outline" size="sm" onClick={async () => { await signOut(); navigate("/"); }}>
+              <Button variant="outline" size="sm" onClick={async () => { await signOut(); navigate({ to: "/" }); }}>
                 <LogOut className="w-4 h-4" />
               </Button>
             </>
           ) : (
             <>
-              <Button variant="ghost" size="sm" onClick={() => navigate("/auth")}>Sign in</Button>
-              <Button size="sm" onClick={() => navigate("/auth?mode=signup")} className="bg-gradient-brand text-background hover:opacity-90 font-semibold">
+              <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/auth" })}>Sign in</Button>
+              <Button size="sm" onClick={() => navigate({ to: "/auth", search: { mode: "signup" } as any })} className="bg-gradient-brand text-background hover:opacity-90 font-semibold">
                 Get started
               </Button>
             </>
