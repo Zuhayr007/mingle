@@ -201,7 +201,17 @@ function ChatPage() {
             <div ref={messagesEnd} />
           </div>
           <form
-            onSubmit={(e) => { e.preventDefault(); if (text.trim()) { session.sendMessage(text.trim()); setText(""); } }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!text.trim()) return;
+              const result = moderateOutgoing(text);
+              if (!result.ok) {
+                toast.error(result.reason);
+                return;
+              }
+              session.sendMessage(result.clean);
+              setText("");
+            }}
             className="p-3 border-t border-border/50 flex gap-2"
           >
             <Input
