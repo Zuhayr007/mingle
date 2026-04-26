@@ -73,7 +73,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     });
 
-    return () => sub.subscription.unsubscribe();
+    // Periodically re-check ban status so a moderator action takes effect
+    // for already-signed-in users within ~60s without requiring a refresh.
+    const interval = setInterval(async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) return;
+      const activeBan = await getActiveBan(session.user.id);
+      if (activeBan) {
+        setBan(activeBan);
+        setBanOpen(true);
+        await supabase.auth.signOut();
+        setUser(null);
+        setProfile(null);
+        setIsAdmin(false);
+      }
+    }, 60_000);
+
+    return () => {
+      sub.subscription.unsubscribe();
+      clearInterval(interval);
+    };
   }, []);
 
   const refreshProfile = async () => {

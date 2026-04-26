@@ -43,3 +43,24 @@ export function formatRemaining(expiresAt: string): string {
   if (hours > 0) return `${hours}h ${minutes}m`;
   return `${minutes}m`;
 }
+
+/**
+ * Detailed countdown breakdown for live ticking displays.
+ * Returns null once the ban has expired.
+ */
+export function getCountdownParts(expiresAt: string): {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  totalMs: number;
+} | null {
+  const totalMs = new Date(expiresAt).getTime() - Date.now();
+  if (totalMs <= 0) return null;
+  const totalSec = Math.floor(totalMs / 1000);
+  const days = Math.floor(totalSec / 86400);
+  const hours = Math.floor((totalSec % 86400) / 3600);
+  const minutes = Math.floor((totalSec % 3600) / 60);
+  const seconds = totalSec % 60;
+  return { days, hours, minutes, seconds, totalMs };
+}

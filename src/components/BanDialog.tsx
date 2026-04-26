@@ -1,8 +1,56 @@
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Ban, Clock } from "lucide-react";
 import type { ActiveBan } from "@/lib/bans";
-import { formatRemaining } from "@/lib/bans";
+import { getCountdownParts } from "@/lib/bans";
+
+function CountdownCell({ value, label }: { value: number; label: string }) {
+  const padded = value.toString().padStart(2, "0");
+  return (
+    <div className="flex flex-col items-center">
+      <div className="min-w-[3rem] rounded-lg bg-background/60 border border-red-500/30 px-3 py-2 font-mono text-2xl font-black tabular-nums text-red-300">
+        {padded}
+      </div>
+      <div className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground">{label}</div>
+    </div>
+  );
+}
+
+function LiveCountdown({ expiresAt, onExpire }: { expiresAt: string; onExpire: () => void }) {
+  const [parts, setParts] = useState(() => getCountdownParts(expiresAt));
+
+  useEffect(() => {
+    const tick = () => {
+      const next = getCountdownParts(expiresAt);
+      setParts(next);
+      if (!next) onExpire();
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [expiresAt, onExpire]);
+
+  if (!parts) {
+    return (
+      <div className="text-center text-sm font-semibold text-green-400">
+        Your ban has just expired — you can sign in again.
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center gap-2">
+      <CountdownCell value={parts.days} label="days" />
+      <span className="text-2xl font-black text-red-400/60 mb-4">:</span>
+      <CountdownCell value={parts.hours} label="hours" />
+      <span className="text-2xl font-black text-red-400/60 mb-4">:</span>
+      <CountdownCell value={parts.minutes} label="min" />
+      <span className="text-2xl font-black text-red-400/60 mb-4">:</span>
+      <CountdownCell value={parts.seconds} label="sec" />
+    </div>
+  );
+}
 
 export function BanDialog({
   ban,
@@ -34,21 +82,25 @@ export function BanDialog({
               <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Reason</div>
               <div className="font-semibold">{ban.reason}</div>
             </div>
-            <div className="rounded-xl bg-muted/40 p-4 flex items-center gap-3">
-              <Clock className="w-4 h-4 text-muted-foreground" />
-              <div>
-                <div className="text-xs uppercase tracking-wide text-muted-foreground">Duration</div>
-                {ban.is_permanent ? (
-                  <div className="font-semibold text-red-400">Permanent — no expiration</div>
-                ) : ban.expires_at ? (
-                  <div className="font-semibold">
-                    Ends {new Date(ban.expires_at).toLocaleString()}{" "}
-                    <span className="text-muted-foreground font-normal">
-                      (in {formatRemaining(ban.expires_at)})
-                    </span>
-                  </div>
-                ) : null}
+            <div className="rounded-xl bg-muted/40 p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Clock className="w-4 h-4 text-muted-foreground" />
+                <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                  {ban.is_permanent ? "Duration" : "Time remaining"}
+                </div>
               </div>
+              {ban.is_permanent ? (
+                <div className="font-semibold text-red-400 text-center">
+                  Permanent — no expiration
+                </div>
+              ) : ban.expires_at ? (
+                <>
+                  <LiveCountdown expiresAt={ban.expires_at} onExpire={() => { /* user can refresh */ }} />
+                  <div className="mt-3 text-center text-xs text-muted-foreground">
+                    Lifts on {new Date(ban.expires_at).toLocaleString()}
+                  </div>
+                </>
+              ) : null}
             </div>
             <p className="text-xs text-muted-foreground text-center pt-2">
               If you believe this is a mistake, please contact support.
