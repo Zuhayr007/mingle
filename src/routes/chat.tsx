@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useMingleSession } from "@/hooks/useMingleSession";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
+import { moderateOutgoing } from "@/lib/moderation";
 import { Video, VideoOff, Mic, MicOff, SkipForward, Phone, Send, Flag, Sparkles } from "lucide-react";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
