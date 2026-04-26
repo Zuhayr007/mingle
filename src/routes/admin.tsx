@@ -19,7 +19,7 @@ import { ShieldAlert, Ban, Clock, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
-    meta: [{ title: "Admin — Mingle" }, { name: "description", content: "Mingle admin panel." }],
+    meta: [{ title: "Admin | Mingle" }, { name: "description", content: "Mingle admin panel." }],
   }),
   component: AdminPage,
 });

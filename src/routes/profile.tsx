@@ -11,7 +11,7 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/profile")({
   head: () => ({
     meta: [
-      { title: "Your profile — Mingle" },
+      { title: "Your profile | Mingle" },
       { name: "description", content: "Manage your Mingle profile." },
     ],
   }),
