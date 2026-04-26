@@ -36,11 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const { data: prof } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", uid)
-      .maybeSingle();
+    const { data: prof } = await supabase.from("profiles").select("*").eq("id", uid).maybeSingle();
     setProfile((prof as Profile) ?? null);
 
     const { data: role } = await supabase
@@ -76,7 +72,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Periodically re-check ban status so a moderator action takes effect
     // for already-signed-in users within ~60s without requiring a refresh.
     const interval = setInterval(async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session?.user) return;
       const activeBan = await getActiveBan(session.user.id);
       if (activeBan) {

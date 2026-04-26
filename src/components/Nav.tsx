@@ -11,7 +11,9 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur-xl bg-background/60 border-b border-border/50">
       <div className="container mx-auto flex items-center justify-between px-4 h-16">
-        <Link to="/"><Logo /></Link>
+        <Link to="/">
+          <Logo />
+        </Link>
         <nav className="flex items-center gap-2">
           {user ? (
             <>
@@ -24,14 +26,27 @@ export function Nav() {
                 <UserIcon className="w-4 h-4" />
                 <span className="hidden sm:inline">{profile?.username ?? "Profile"}</span>
               </Button>
-              <Button variant="outline" size="sm" onClick={async () => { await signOut(); navigate({ to: "/" }); }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={async () => {
+                  await signOut();
+                  navigate({ to: "/" });
+                }}
+              >
                 <LogOut className="w-4 h-4" />
               </Button>
             </>
           ) : (
             <>
-              <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/auth" })}>Sign in</Button>
-              <Button size="sm" onClick={() => navigate({ to: "/auth", search: { mode: "signup" } as any })} className="bg-gradient-brand text-background hover:opacity-90 font-semibold">
+              <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/auth" })}>
+                Sign in
+              </Button>
+              <Button
+                size="sm"
+                onClick={() => navigate({ to: "/auth", search: { mode: "signup" } as any })}
+                className="bg-gradient-brand text-background hover:opacity-90 font-semibold"
+              >
                 Get started
               </Button>
             </>

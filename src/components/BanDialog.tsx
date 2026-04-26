@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Ban, Clock } from "lucide-react";
 import type { ActiveBan } from "@/lib/bans";
@@ -9,7 +16,7 @@ function CountdownCell({ value, label }: { value: number; label: string }) {
   const padded = value.toString().padStart(2, "0");
   return (
     <div className="flex flex-col items-center">
-      <div className="min-w-[3rem] rounded-lg bg-background/60 border border-red-500/30 px-3 py-2 font-mono text-2xl font-black tabular-nums text-red-300">
+      <div className="min-w-12 rounded-lg bg-background/60 border border-red-500/30 px-3 py-2 font-mono text-2xl font-black tabular-nums text-red-300">
         {padded}
       </div>
       <div className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground">{label}</div>
@@ -79,7 +86,9 @@ export function BanDialog({
         {ban && (
           <div className="space-y-3 text-sm">
             <div className="rounded-xl bg-muted/40 p-4">
-              <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Reason</div>
+              <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+                Reason
+              </div>
               <div className="font-semibold">{ban.reason}</div>
             </div>
             <div className="rounded-xl bg-muted/40 p-4">
@@ -95,7 +104,12 @@ export function BanDialog({
                 </div>
               ) : ban.expires_at ? (
                 <>
-                  <LiveCountdown expiresAt={ban.expires_at} onExpire={() => { /* user can refresh */ }} />
+                  <LiveCountdown
+                    expiresAt={ban.expires_at}
+                    onExpire={() => {
+                      /* user can refresh */
+                    }}
+                  />
                   <div className="mt-3 text-center text-xs text-muted-foreground">
                     Lifts on {new Date(ban.expires_at).toLocaleString()}
                   </div>

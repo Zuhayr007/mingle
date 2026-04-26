@@ -94,7 +94,7 @@ function AuthPage() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <div className="rounded-3xl bg-card/80 backdrop-blur-xl border border-border/60 p-8 shadow-[var(--shadow-card)]">
+        <div className="rounded-3xl bg-card/80 backdrop-blur-xl border border-border/60 p-8 shadow-(--shadow-card)]">
           <h1 className="text-3xl font-black mb-2">
             {mode === "signup" ? "Join Mingle" : "Welcome back"}
           </h1>

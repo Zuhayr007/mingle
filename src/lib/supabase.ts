@@ -6,17 +6,21 @@ const anon = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 if (!url || !anon || url.includes("your-project")) {
   // eslint-disable-next-line no-console
   console.warn(
-    "[Mingle] Supabase env vars missing. Copy .env.example to .env and fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY."
+    "[Mingle] Supabase env vars missing. Copy .env.example to .env and fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.",
   );
 }
 
-export const supabase = createClient(url || "https://placeholder.supabase.co", anon || "placeholder", {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
+export const supabase = createClient(
+  url || "https://placeholder.supabase.co",
+  anon || "placeholder",
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+    },
   },
-});
+);
 
 export type Profile = {
   id: string;

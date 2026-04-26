@@ -38,7 +38,10 @@ function ProfilePage() {
       .eq("id", user.id);
     setSaving(false);
     if (error) toast.error(error.message);
-    else { toast.success("Saved"); refreshProfile(); }
+    else {
+      toast.success("Saved");
+      refreshProfile();
+    }
   };
 
   return (
@@ -53,9 +56,18 @@ function ProfilePage() {
           </div>
           <div>
             <Label htmlFor="u">Username</Label>
-            <Input id="u" value={username} onChange={e => setUsername(e.target.value)} minLength={3} />
+            <Input
+              id="u"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              minLength={3}
+            />
           </div>
-          <Button onClick={save} disabled={saving} className="bg-gradient-brand text-background hover:opacity-90 font-bold rounded-xl">
+          <Button
+            onClick={save}
+            disabled={saving}
+            className="bg-gradient-brand text-background hover:opacity-90 font-bold rounded-xl"
+          >
             {saving ? "Saving…" : "Save changes"}
           </Button>
         </div>

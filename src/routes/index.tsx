@@ -20,20 +20,11 @@ function Index() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-20 -left-20 w-96 h-96 rounded-full bg-[var(--brand-pink)] opacity-20 blur-3xl animate-float-slow" />
-          <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] rounded-full bg-[var(--brand-cyan)] opacity-20 blur-3xl animate-float-slow" style={{ animationDelay: "2s" }}/>
+          <div className="absolute top-20 -left-20 w-96 h-96 rounded-full bg-(--brand-pink)] opacity-20 blur-3xl animate-float-slow" />
+          <div className="absolute bottom-0 right-0 w-md h-112 rounded-full bg-(--brand-cyan)] opacity-20 blur-3xl animate-float-slow" style={{ animationDelay: "2s" }}/>
         </div>
 
         <div className="container mx-auto px-4 pt-20 pb-32 text-center max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 backdrop-blur px-4 py-1.5 text-xs font-medium mb-8"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-[var(--brand-pink)]" />
-            <span>Talk to someone new in 3 seconds</span>
-          </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -53,7 +44,7 @@ function Index() {
             className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
           >
             Mingle drops you into a face-to-face conversation with a random
-            stranger. No friend lists, no algorithms — just real moments.
+            stranger. No friend lists, no algorithms, just real moments.
           </motion.p>
 
           <motion.div
@@ -96,7 +87,7 @@ function Index() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="rounded-3xl bg-card/60 backdrop-blur border border-border/60 p-8 hover:border-[var(--brand-pink)]/40 transition-colors"
+              className="rounded-3xl bg-card/60 backdrop-blur border border-border/60 p-8 hover:border-(--brand-pink)]/40 transition-colors"
             >
               <div className="w-12 h-12 rounded-xl bg-gradient-brand flex items-center justify-center mb-4">
                 <f.icon className="w-6 h-6 text-background" />

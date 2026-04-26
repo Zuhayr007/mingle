@@ -22,14 +22,12 @@ export async function getActiveBan(userId: string): Promise<ActiveBan | null> {
     .limit(20);
   if (error || !data) return null;
   const active = (data as ActiveBan[]).filter(
-    b => b.is_permanent || (b.expires_at && b.expires_at > nowIso)
+    (b) => b.is_permanent || (b.expires_at && b.expires_at > nowIso),
   );
   if (active.length === 0) return null;
-  const perm = active.find(b => b.is_permanent);
+  const perm = active.find((b) => b.is_permanent);
   if (perm) return perm;
-  return active.sort((a, b) =>
-    (b.expires_at ?? "").localeCompare(a.expires_at ?? "")
-  )[0];
+  return active.sort((a, b) => (b.expires_at ?? "").localeCompare(a.expires_at ?? ""))[0];
 }
 
 export function formatRemaining(expiresAt: string): string {

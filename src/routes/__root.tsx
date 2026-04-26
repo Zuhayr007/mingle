@@ -31,11 +31,19 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Mingle — Random video chat with strangers" },
-      { name: "description", content: "Meet someone new in seconds. Mingle pairs you 1-on-1 with random people for spontaneous video conversations." },
+      { title: "Mingle | Random video chat with strangers" },
+      {
+        name: "description",
+        content:
+          "Meet someone new in seconds. Mingle pairs you 1-on-1 with random people for spontaneous video conversations.",
+      },
       { name: "theme-color", content: "#1a1230" },
-      { property: "og:title", content: "Mingle — Random video chat" },
-      { property: "og:description", content: "Meet someone new in seconds. Spontaneous 1-on-1 video chat with strangers around the world." },
+      { property: "og:title", content: "Mingle | Random video chat" },
+      {
+        property: "og:description",
+        content:
+          "Meet someone new in seconds. Spontaneous 1-on-1 video chat with strangers around the world.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -49,7 +57,10 @@ export const Route = createRootRoute({
       { rel: "apple-touch-icon", href: "/icon-192.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
