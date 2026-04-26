@@ -1,8 +1,10 @@
 [build]
-  command = "bun run build"
-  publish = "dist"
+  command = "npm run build && rm -f dist/client/_redirects"
+  publish = "dist/client"
+  functions = "netlify/functions"
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/app"
   status = 200
+  force = false
