@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 export const Route = createFileRoute("/chat")({
   head: () => ({
     meta: [
-      { title: "Chat — Mingle" },
+      { title: "Chat | Mingle" },
       { name: "description", content: "Live random video chat with strangers on Mingle." },
     ],
   }),
@@ -90,7 +90,7 @@ function ChatPage() {
 
       <main className="flex-1 container mx-auto px-4 py-6 grid lg:grid-cols-[1fr_360px] gap-4">
         {/* Video stage */}
-        <div className="relative rounded-3xl overflow-hidden bg-card/60 border border-border/60 min-h-[480px] flex items-center justify-center">
+        <div className="relative rounded-3xl overflow-hidden bg-card/60 border border-border/60 min-h-120 flex items-center justify-center">
           {/* Remote video */}
           {session.status === "connected" && (
             <video ref={remoteVideo} autoPlay playsInline className="absolute inset-0 w-full h-full object-cover" />
@@ -100,10 +100,7 @@ function ChatPage() {
           <AnimatePresence mode="wait">
             {session.status === "idle" && (
               <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center p-10">
-                <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 backdrop-blur px-3 py-1 text-xs mb-6">
-                  <Sparkles className="w-3 h-3 text-[var(--brand-pink)]" /> Ready when you are
-                </div>
-                <h2 className="display text-4xl md:text-5xl font-black mb-4">Tap go to <span className="text-gradient">mingle</span></h2>
+                <h2 className="display text-4xl md:text-5xl font-black mb-4">Tap the start button to <span className="text-gradient">mingle</span></h2>
                 <p className="text-muted-foreground mb-8 max-w-md mx-auto">We'll find someone in seconds. Be kind. Be curious.</p>
                 <Button onClick={session.findPartner} size="lg" className="h-16 px-12 bg-gradient-brand text-background hover:opacity-90 font-bold text-lg rounded-2xl glow-pink">
                   <Video className="w-6 h-6" /> Start
@@ -122,7 +119,7 @@ function ChatPage() {
             )}
             {session.status === "connecting" && (
               <motion.div key="conn" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full border-4 border-[var(--brand-pink)] border-t-transparent animate-spin" />
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full border-4 border-(--brand-pink) border-t-transparent animate-spin" />
                 <h2 className="text-2xl font-bold">Connecting to {session.partnerUsername ?? "stranger"}…</h2>
               </motion.div>
             )}
@@ -168,14 +165,14 @@ function ChatPage() {
                 <SkipForward className="w-4 h-4" />
               </Button>
               <Button size="icon" variant="destructive" onClick={session.stop} className="rounded-full" title="Hang up">
-                <Phone className="w-4 h-4 rotate-[135deg]" />
+                <Phone className="w-4 h-4 rotate-135" />
               </Button>
             </div>
           )}
         </div>
 
         {/* Chat sidebar */}
-        <aside className="rounded-3xl bg-card/60 border border-border/60 flex flex-col min-h-[400px] lg:min-h-0">
+        <aside className="rounded-3xl bg-card/60 border border-border/60 flex flex-col min-h-100 lg:min-h-0">
           <div className="p-4 border-b border-border/50 font-bold">Messages</div>
           <div className="flex-1 p-4 overflow-y-auto space-y-3 max-h-[60vh] lg:max-h-none">
             {session.messages.length === 0 && (

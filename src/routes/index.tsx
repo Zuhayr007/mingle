@@ -127,7 +127,7 @@ function Index() {
       </section>
 
       <footer className="container mx-auto px-4 py-10 text-center text-sm text-muted-foreground border-t border-border/50">
-        © {new Date().getFullYear()} Mingle. Be kind to strangers.
+        © {new Date().getFullYear()} Mingle. All rights reserved. Created by <a href="https://github.com/kxngzero329" className=" hover:text-foreground">Zuhayr Smith</a>.
       </footer>
     </div>
   );
